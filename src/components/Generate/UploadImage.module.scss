@@ -1,0 +1,26 @@
+@import "./../../assets/styles/main.scss";
+
+.container {
+    height: 100%;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.uploadImageText {
+    @include p-large;
+    color: $slate-900;
+}
+
+.fileTypeText {
+    @include p-detail;
+    color: $slate-400;
+    margin-top: 0px;
+}
