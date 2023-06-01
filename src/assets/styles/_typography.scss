@@ -1,0 +1,24 @@
+// Font Families
+
+// Font sizes
+$fs-900: clamp(5rem, 8vw + 1rem, 9.375rem);
+$fs-800: 4.5rem;
+$fs-700: 3.5rem;
+$fs-600: 1.25rem;
+$fs-500: 1rem;
+$fs-400: 0.9375rem;
+$fs-300: 0.875rem;
+$fs-200: 0.775rem;
+
+// Line heights
+$line-height-base: 1.5;
+
+// Font weights
+$fw-thin: 100;
+$fw-extraLight: 200;
+$fw-light: 300;
+$fw-regular: 400;
+$fw-medium: 500;
+$fw-semiBold: 600;
+$fw-bold: 700;
+$fw-extraBold: 800;

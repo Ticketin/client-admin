@@ -1,0 +1,77 @@
+@import "_typography";
+@import "_colors";
+
+// typography mixins
+
+@mixin p-large {
+    font-size: 1.125; //18px
+    line-height: 2rem; //28px
+    font-weight: $fw-semiBold;
+}
+
+@mixin p-lead {
+    font-size: 1.25rem; //20px
+    line-height: 2rem; //32px
+}
+
+@mixin p-table-head{
+    font-size: 1rem; // 16px
+    lineheight: 1.5rem; //24px
+    font-weight: $fw-bold;
+}
+
+@mixin p-default {
+    font-size: 1rem; //16px
+    line-height: 1.75rem; //28px
+}
+
+@mixin p-ui {
+    font-size: 1rem; //16px
+    line-height: 1.5rem; //24px
+}
+
+@mixin p-ui-medium {
+    font-size: 1rem; //14px
+    line-height: 1.5rem; //24px
+    font-weight: $fw-medium;
+}
+
+@mixin p-body {
+    font-size: 0.875rem; //14px
+    line-height: 1.5rem; //24px
+}
+
+@mixin p-body-medium {
+    font-size: 0.875rem; //14px
+    line-height: 1.5rem; //24px
+    font-weight: $fw-medium;
+}
+
+@mixin p-subtle {
+    font-size: 0.875rem; //14px
+    line-height: 1.25rem; //20px
+}
+
+@mixin p-subtle-medium {
+    font-size: 0.875rem; //14px
+    line-height: 1.25rem; //20px
+    font-weight: $fw-medium;
+}
+
+@mixin p-subtle-semibold {
+    font-size: 0.875rem; //14px
+    line-height: 1.25rem; //20px
+    font-weight: $fw-semiBold;
+}
+
+@mixin p-small {
+    font-size: 0.875rem; //14px
+    line-height: 0.875rem; //14px
+    font-weight: $fw-medium;
+}
+
+@mixin p-detail {
+    font-size: 0.75rem; //12px
+    line-height: 1.25rem; //20px
+    font-weight: $fw-medium;
+}
