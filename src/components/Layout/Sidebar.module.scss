@@ -1,0 +1,66 @@
+@import "./../../assets/styles/main.scss";
+
+.flexContainer {
+    height: 100vh;
+    display: flex;
+}
+
+.sidebar {
+    height: 100%;
+    width: 30%;
+    max-width: 250px;
+    min-width: 100px;
+    background-color: $slate-100;
+}
+
+.main {
+    flex: 1;
+    overflow: auto;
+}
+
+.mainNavigation {
+    width: 100%;
+    padding: 10px;
+    margin-top: 100px;
+}
+
+.mainNavigation .li {
+    @include p-ui-medium;
+    width: 100%;
+    margin: 5px 0 5px 0;
+    text-align: center;
+    color: $slate-900;
+}
+
+.mainNavigation a {
+    display: inline-block;
+    width: 100%;
+    padding: 8px;
+}
+
+.mainNavigation a:hover,
+.mainNavigation a:active,
+.mainNavigation a.active {
+    background-color: $slate-200;
+    border-radius: 8px;
+}
+
+// .activeLink {
+//     display: inline-block;
+//     padding: 7px 0 7px 0;
+//     background-color: $slate-200;
+//     border-radius: 8px;
+//     width: 100%;
+// }
+
+.li.active {
+}
+
+// .sidebar {
+//     position: absolute;
+//     left: 0;
+//     top: 0;
+//     height: 100%;
+//     min-width: 290px;
+//     background-color: $slate-100;
+// }

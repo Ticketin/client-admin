@@ -1,0 +1,9 @@
+.flexContainer {
+    height: 100vh;
+    display: flex;
+}
+
+.main {
+    flex: 1;
+    overflow: auto;
+}
