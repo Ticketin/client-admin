@@ -1,0 +1,26 @@
+.landing {
+    background-color: white;
+    height: 100vh;
+    width: 100%;
+}
+
+
+.logoWrapper img {
+    min-width: 50px;
+}
+
+.intro{
+    text-align: center;
+}
+
+.content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.content > * {
+    margin: 10px;
+}
