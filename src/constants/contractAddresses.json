@@ -1,1 +1,10 @@
-{"31337":{"PockyCollections":["0x5FbDB2315678afecb367f032d93F642f64180aa3"],"Ticket":["0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"]}}
+{
+  "31337": {
+    "PockyCollections": ["0x5FbDB2315678afecb367f032d93F642f64180aa3"],
+    "Ticket": ["0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"]
+  },
+  "80001": {
+    "PockyCollections": ["0xA76aCA426c2707D83cC78651B2776e6a8c4C3aF2"],
+    "Ticket": ["0x4Aa22E1668a696eA039B48633e0f7eF0b51D1A6c"]
+  }
+}

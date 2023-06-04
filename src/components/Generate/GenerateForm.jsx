@@ -9,17 +9,23 @@ import { useEffect } from "react";
 import { pockyCollectionsAbi } from "../../constants";
 import {
   useContractWrite,
+  useNetwork,
   usePrepareContractWrite,
   useWaitForTransaction,
 } from "wagmi";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import {
+  CONTRACTS,
+  getContractAddressByChain,
+} from "../../utils/getContractAddressByChain";
 
 const GenerateForm = ({ uploadedImage }) => {
   const API_KEY = import.meta.env.VITE_NFTSTORAGE_API_KEY;
   const client = new NFTStorage({ token: API_KEY });
 
   const navigate = useNavigate();
+  const { chain } = useNetwork();
   const [imageUploaded, setImageUploaded] = useState(false);
   const [imageUrl, setImageUrl] = useState();
 
@@ -44,7 +50,10 @@ const GenerateForm = ({ uploadedImage }) => {
     data: prepareData,
     refetch: refetchPrepare,
   } = usePrepareContractWrite({
-    address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    address: getContractAddressByChain(
+      chain,
+      CONTRACTS.POCKYCOLLECTIONS_CONTRACT
+    ),
     abi: pockyCollectionsAbi,
     functionName: "register",
     enabled: imageUploaded,

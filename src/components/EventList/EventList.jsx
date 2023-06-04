@@ -1,16 +1,21 @@
 import React, { useState } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
-import { useContractRead } from "wagmi";
+import { useContractRead, useNetwork } from "wagmi";
 import { pockyCollectionsAbi } from "../../constants";
 import { convertUnixTime } from "../../utils/convertUnixTime";
 
 import styles from "./EventList.module.scss";
 import MyModal from "./Modal";
+import {
+  CONTRACTS,
+  getContractAddressByChain,
+} from "../../utils/getContractAddressByChain";
 
 const EventList = () => {
   const [showModal, setShowModal] = useState();
   const [eventsNow, setEventsNow] = useState([]);
   const [eventsUpcoming, setEventsUpcoming] = useState([]);
+  const { chain } = useNetwork();
 
   const handleOpenModal = () => {
     console.log(`clicked handleClickEvent`);
@@ -22,7 +27,10 @@ const EventList = () => {
   };
 
   const { data, refetch } = useContractRead({
-    address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    address: getContractAddressByChain(
+      chain,
+      CONTRACTS.POCKYCOLLECTIONS_CONTRACT
+    ),
     abi: pockyCollectionsAbi,
     functionName: "list",
     args: [],
