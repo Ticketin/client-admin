@@ -8,10 +8,7 @@ import { NFTStorage } from "nft.storage";
 import { useEffect } from "react";
 import { pockyCollectionsAbi } from "../../constants";
 import {
-  useAccount,
-  useContractRead,
   useContractWrite,
-  useNetwork,
   usePrepareContractWrite,
   useWaitForTransaction,
 } from "wagmi";
@@ -33,8 +30,6 @@ const GenerateForm = ({ uploadedImage }) => {
     mode: "all", // "onChange" + "onBlur"
   });
 
-  console.log(uploadedImage);
-
   const watchName = watch("name", false); // false is defeault value
   const watchDescription = watch("description", false);
   const watchCategory = watch("category", false);
@@ -45,8 +40,6 @@ const GenerateForm = ({ uploadedImage }) => {
   const {
     config,
     data: prepareData,
-    error: prepareError,
-    isError: isPrepareError,
     refetch: refetchPrepare,
   } = usePrepareContractWrite({
     address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
@@ -73,6 +66,7 @@ const GenerateForm = ({ uploadedImage }) => {
 
   const { data, error, isError, write } = useContractWrite(config);
 
+  // TODO: navigate to eventList after Tx is succesful
   const { isLoading, isSuccess } = useWaitForTransaction({
     hash: data?.hash,
     onSuccess(data) {
