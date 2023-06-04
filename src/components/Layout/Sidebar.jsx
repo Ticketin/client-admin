@@ -16,15 +16,14 @@ const Sidebar = () => {
               Event List
             </NavLink>
           </li>
-          <li className={styles.li}>
+          {/* <li className={styles.li}>
             <NavLink
               className={(navData) => (navData.isActive ? styles.active : "")}
               to={"/activated"}
             >
               Activated Events
             </NavLink>
-          </li>
-
+          </li> */}
           <li className={styles.li}>
             <NavLink
               className={(navData) => (navData.isActive ? styles.active : "")}
