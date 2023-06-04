@@ -4,7 +4,7 @@ import InputField from "../UI/InputField";
 import styles from "./GenerateForm.module.scss";
 import Dropdown from "../UI/Dropdown";
 import DateField from "../UI/DateField";
-import { NFTStorage } from "nft.storage";
+import { NFTStorage } from "nft.storage/dist/bundle.esm.min.js";
 import { useEffect } from "react";
 import { pockyCollectionsAbi } from "../../constants";
 import {
