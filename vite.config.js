@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   build: {
     rollupOptions: {
-      external: ["nft.storage"],
+      external: ["nft.storage/dist/bundle.esm.min.js"],
     },
   },
 });
