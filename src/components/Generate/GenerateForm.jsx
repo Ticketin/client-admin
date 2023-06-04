@@ -13,11 +13,13 @@ import {
   useWaitForTransaction,
 } from "wagmi";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 const GenerateForm = ({ uploadedImage }) => {
   const API_KEY = import.meta.env.VITE_NFTSTORAGE_API_KEY;
   const client = new NFTStorage({ token: API_KEY });
 
+  const navigate = useNavigate();
   const [imageUploaded, setImageUploaded] = useState(false);
   const [imageUrl, setImageUrl] = useState();
 
@@ -66,12 +68,13 @@ const GenerateForm = ({ uploadedImage }) => {
 
   const { data, error, isError, write } = useContractWrite(config);
 
-  // TODO: navigate to eventList after Tx is succesful
+  // navigates to event-list page after the transaction was succesful
   const { isLoading, isSuccess } = useWaitForTransaction({
     hash: data?.hash,
     onSuccess(data) {
       console.log(`finished`);
       console.log(data);
+      navigate("/event-list");
     },
   });
 
