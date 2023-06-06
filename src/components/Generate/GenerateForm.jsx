@@ -8,6 +8,7 @@ import { NFTStorage } from "nft.storage";
 import { useEffect } from "react";
 import { pockyCollectionsAbi } from "../../constants";
 import {
+  useAccount,
   useContractWrite,
   useNetwork,
   usePrepareContractWrite,
@@ -19,6 +20,7 @@ import {
   CONTRACTS,
   getContractAddressByChain,
 } from "../../utils/getContractAddressByChain";
+import CheckBox from "../UI/CheckBox";
 
 const GenerateForm = ({ uploadedImage }) => {
   const API_KEY = import.meta.env.VITE_NFTSTORAGE_API_KEY;
@@ -26,6 +28,7 @@ const GenerateForm = ({ uploadedImage }) => {
 
   const navigate = useNavigate();
   const { chain } = useNetwork();
+  const { address } = useAccount();
   const [imageUploaded, setImageUploaded] = useState(false);
   const [imageUrl, setImageUrl] = useState();
 
@@ -40,7 +43,10 @@ const GenerateForm = ({ uploadedImage }) => {
 
   const watchName = watch("name", false); // false is defeault value
   const watchDescription = watch("description", false);
+  const watchTicketPrice = watch("ticketPrice", false);
+  const watchTicketAmount = watch("ticketAmount", false);
   const watchCategory = watch("category", false);
+  const watchFeatured = watch("featured", false);
   const watchStartDate = watch("startDate", false);
   const watchEndDate = watch("endDate", false);
   const watchLocation = watch("location", false);
@@ -59,18 +65,21 @@ const GenerateForm = ({ uploadedImage }) => {
     enabled: imageUploaded,
     args: [
       [
-        watchName,
-        watchCategory,
+        watchName, // event name
+        watchCategory, // event category
+        watchTicketPrice, // price per ticket (in ETH)
+        address, // the owner of the deployed collection (= currently signed in account)
+        watchTicketAmount, // total amount of avaiable tickets
         "x", // default value for dateText
-        dateTimeToTimestamp(watchStartDate),
-        dateTimeToTimestamp(watchEndDate),
-        watchLocation,
-        watchDescription,
-        imageUrl,
-        "x", // default value for backgroundUrl
-        false, // default value for featured
+        dateTimeToTimestamp(watchStartDate), // event start date
+        dateTimeToTimestamp(watchEndDate), // event end date
+        "x", // defaultl value for matchDate
+        watchLocation, // event location
+        watchDescription, // event description
+        imageUrl, // event cover image (before update)
+        watchFeatured, // value to set a featured event
         false, // default value for updated
-        "x", // default value for eventResult
+        ["x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x"], // default value for eventResult struct
       ],
     ],
   });
@@ -90,6 +99,7 @@ const GenerateForm = ({ uploadedImage }) => {
   const uploadImageToIPFS = async (uploadedImage) => {
     const imageCid = await client.storeBlob(uploadedImage[0]);
     const ipfsImageUrl = `https://ipfs.io/ipfs/${imageCid}`;
+    console.log(ipfsImageUrl);
     setImageUrl(ipfsImageUrl);
   };
 
@@ -153,6 +163,30 @@ const GenerateForm = ({ uploadedImage }) => {
           }}
           required
         />
+        <InputField
+          type="number"
+          name="ticketPrice"
+          label="Ticket Price"
+          placeholder="Enter the price per ticket in ETH here"
+          errors={errors}
+          register={register}
+          validationSchema={{
+            required: "Ticket Price is required.",
+          }}
+          required
+        />
+        <InputField
+          type="number"
+          name="ticketAmount"
+          label="Total Amount of Tickets"
+          placeholder="Enter the total amount of tickets here"
+          errors={errors}
+          register={register}
+          validationSchema={{
+            required: "Ticket Amount is required.",
+          }}
+          required
+        />
         <Dropdown
           name="category"
           label="Category"
@@ -167,6 +201,8 @@ const GenerateForm = ({ uploadedImage }) => {
           }}
           required
         />
+        <CheckBox name="featured" label="Featured Event" register={register} />
+
         <DateField
           type="text"
           name="startDate"

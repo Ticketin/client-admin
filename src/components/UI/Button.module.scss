@@ -49,5 +49,6 @@
     /* Button Pseudo-classes */
     &:hover {
         transform: translate(1px, 1px);
+        background-color: $slate-700;
     }
 }

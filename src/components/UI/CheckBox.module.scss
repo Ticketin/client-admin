@@ -13,8 +13,9 @@
 }
 
 .formInput {
-    padding: 8px 6px 8px 6px;
-    width: 100%;
+    padding: 4px 6px 4px 6px;
+    width: 20px;
+    aspect-ratio: 1/1;
     border-radius: 5px;
     border: 1px solid $slate-300;
 }

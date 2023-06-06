@@ -25,7 +25,7 @@ const Generate = () => {
                     <div className={styles.uploadImageWrapper}>
                         <UploadImage onUpload={handleUpload}/>
                         <div className={styles.buttonWrapper}>
-                            <Button type="submit" form="generate-form" content="generate" size="medium" />
+                            <Button type="submit" form="generate-form" content="Generate" size="medium" />
                         </div>
                     </div>
                 </div>
