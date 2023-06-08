@@ -32,11 +32,7 @@ const ModalDetails = ({ show, closeModal, eventId }) => {
           </button>
         </div>
         <div className={styles.modalContent}>
-          <div className={styles.formColumn}>
-            <ModalContent eventId={eventId} />
-          </div>
-          <div className={styles.imageColumn}>
-          </div>
+          <ModalContent eventId={eventId} />
         </div>
       </Modal>
     </div>

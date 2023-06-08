@@ -29,6 +29,7 @@ const EventList = () => {
 
   const handleCloseModal = () => {
     setShowModal(false);
+    setClickedEventId(null);
   };
 
   const { data, refetch } = useContractRead({
@@ -129,7 +130,7 @@ const EventList = () => {
                     <div
                       key={index}
                       className={styles.eventRow}
-                      onClick={handleOpenModal}
+                      onClick={() => handleOpenModal(event.eventId)}
                     >
                       <div className={styles.imageWrapper}>
                         <img

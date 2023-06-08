@@ -75,18 +75,25 @@ const ModalContent = ({ eventId }) => {
   });
 
   return (
-    <div>
+    <div className={styles.modalContent}>
       {eventData && balance ? (
         <>
-          {" "}
-          <img src={eventData.imageUrl} />
-          <p>{eventData.name}</p>
-          <p>{eventData.description}</p>
-          <p>
-            Revenue Generated: {ethers.utils.formatEther(balance.toString())}{" "}
-            ETH{" "}
-          </p>
-          <Button content="Withdraw Funds" onSubmit={()=> write?.()} />
+          <div className={styles.formColumn}>
+            <h4>{eventData.name}</h4>
+            <p>{eventData.description}</p>
+            <p>
+              Revenue Generated: {ethers.utils.formatEther(balance.toString())}{" "}
+              ETH{" "}
+            </p>
+          </div>
+          <div className={styles.imageColumn}>
+            <div className={styles.imageWrapper}>
+              <img className={styles.eventImage} src={eventData.imageUrl} />
+            </div>
+            <div className={styles.buttonWrapper}>
+              <Button size="medium" content="Withdraw Funds" onSubmit={() => write?.()} />
+            </div>
+          </div>
         </>
       ) : null}
     </div>
