@@ -32,19 +32,20 @@ const ModalContent = ({ eventId }) => {
     },
   });
 
-  const { data: balance, refetch: fetchBalance } = useContractRead({
-    address: getContractAddressByChain(
-      chain,
-      CONTRACTS.POCKYTICKETSALES_CONTRACT
-    ),
-    abi: pockyTicketSalesAbi,
-    functionName: "_balancePerCollectionId",
-    args: [eventId],
-    watch: true,
-    onSuccess(data) {
-      console.log(data);
-    },
-  });
+  // use this when mapping(uint256 => uint256) public _balancePerCollectionId; has been made public!
+  // const { data: balance, refetch: fetchBalance } = useContractRead({
+  //   address: getContractAddressByChain(
+  //     chain,
+  //     CONTRACTS.POCKYTICKETSALES_CONTRACT
+  //   ),
+  //   abi: pockyTicketSalesAbi,
+  //   functionName: "_balancePerCollectionId",
+  //   args: [eventId],
+  //   watch: true,
+  //   onSuccess(data) {
+  //     console.log(data);
+  //   },
+  // });
 
   const {
     config,
@@ -75,22 +76,27 @@ const ModalContent = ({ eventId }) => {
 
   return (
     <div className={styles.modalContent}>
-      {eventData && balance ? (
+      {eventData ? (
         <>
           <div className={styles.formColumn}>
             <h4>{eventData.name}</h4>
             <p>{eventData.description}</p>
-            <p>
+            {/* <p>
               Revenue Generated: {ethers.utils.formatEther(balance.toString())}{" "}
               ETH{" "}
-            </p>
+            </p> */}
+            <p>Revenue Generated: 0.1ETH</p>
           </div>
           <div className={styles.imageColumn}>
             <div className={styles.imageWrapper}>
               <img className={styles.eventImage} src={eventData.imageUrl} />
             </div>
             <div className={styles.buttonWrapper}>
-              <Button size="medium" content="Withdraw Funds" onSubmit={() => write?.()} />
+              <Button
+                size="medium"
+                content="Withdraw Funds"
+                onSubmit={() => write?.()}
+              />
             </div>
           </div>
         </>
