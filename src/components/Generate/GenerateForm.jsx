@@ -2,7 +2,6 @@ import * as React from "react";
 import { useForm } from "react-hook-form";
 import InputField from "../UI/InputField";
 import styles from "./GenerateForm.module.scss";
-import Dropdown from "../UI/Dropdown";
 import DateField from "../UI/DateField";
 import { NFTStorage } from "nft.storage";
 import { useEffect } from "react";
@@ -21,6 +20,8 @@ import {
   getContractAddressByChain,
 } from "../../utils/getContractAddressByChain";
 import CheckBox from "../UI/CheckBox";
+import { newCollection } from "../../api/newCollection";
+import { UPCOMING_EVENT_DATA } from "../../utils/eventDataPlaceholder";
 
 const GenerateForm = ({ uploadedImage }) => {
   const API_KEY = import.meta.env.VITE_NFTSTORAGE_API_KEY;
@@ -30,7 +31,9 @@ const GenerateForm = ({ uploadedImage }) => {
   const { chain } = useNetwork();
   const { address } = useAccount();
   const [imageUploaded, setImageUploaded] = useState(false);
+  const [collectionUpdated, setCollectionUpdated] = useState(false);
   const [imageUrl, setImageUrl] = useState();
+  const [collection, setCollection] = useState(UPCOMING_EVENT_DATA);
 
   const {
     register,
@@ -45,7 +48,6 @@ const GenerateForm = ({ uploadedImage }) => {
   const watchDescription = watch("description", false);
   const watchTicketPrice = watch("ticketPrice", false);
   const watchTicketAmount = watch("ticketAmount", false);
-  const watchCategory = watch("category", false);
   const watchFeatured = watch("featured", false);
   const watchStartDate = watch("startDate", false);
   const watchEndDate = watch("endDate", false);
@@ -64,23 +66,51 @@ const GenerateForm = ({ uploadedImage }) => {
     functionName: "register",
     enabled: imageUploaded,
     args: [
-      [
-        watchName, // event name
-        watchCategory, // event category
-        watchTicketPrice, // price per ticket (in ETH)
-        address, // the owner of the deployed collection (= currently signed in account)
-        watchTicketAmount, // total amount of avaiable tickets
-        "x", // default value for dateText
-        dateTimeToTimestamp(watchStartDate), // event start date
-        dateTimeToTimestamp(watchEndDate), // event end date
-        "x", // defaultl value for matchDate
-        watchLocation, // event location
-        watchDescription, // event description
-        imageUrl, // event cover image (before update)
-        watchFeatured, // value to set a featured event
-        false, // default value for updated
-        ["x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x"], // default value for eventResult struct
-      ],
+      {
+        name: collection.name,
+        priceInETH: collection.priceInETH,
+        owner: address,
+        maxSupply: collection.maxSupply,
+        startDate: collection.startDate, // start date when tickets are avaiable for purchase
+        endDate: collection.endDate, // end date when ticket purchase closes
+        matchDate: collection.matchDate,
+        ticketSvgMetadata: {
+          homeTeamName: collection.ticketSvgMetadata.homeTeamName,
+          homeTeamSymbol: collection.ticketSvgMetadata.homeTeamSymbol,
+          homeTeamLogo: collection.ticketSvgMetadata.homeTeamLogo,
+          homeTeamColor: collection.ticketSvgMetadata.homeTeamColor,
+          awayTeamName: collection.ticketSvgMetadata.awayTeamName,
+          awayTeamSymbol: collection.ticketSvgMetadata.awayTeamName,
+          awayTeamLogo: collection.ticketSvgMetadata.awayTeamLogo,
+          awayTeamColor: collection.ticketSvgMetadata.awayTeamColor,
+          dateLine1: collection.ticketSvgMetadata.dateLine1,
+          dateLine2: collection.ticketSvgMetadata.dateLine2,
+          locationLine1: collection.ticketSvgMetadata.locationLine1,
+          locationLine2: collection.ticketSvgMetadata.locationLine2,
+          qrCodeUrl: collection.ticketSvgMetadata.qrCodeUrl,
+        },
+        eventLocation: collection.eventLocation,
+        description: collection.description,
+        imageUrl: collection.imageUrl,
+        featured: collection.featured,
+        updated: collection.updated,
+        eventResult: {
+          homeScore: "0",
+          homeFGM: "",
+          homeFGP: "",
+          homeTPM: "",
+          homeTPP: "",
+          homeFTM: "",
+          homeFTP: "",
+          awayScore: "0",
+          awayFGM: "",
+          awayFGP: "",
+          awayTPM: "",
+          awayTPP: "",
+          awayFTM: "",
+          awayFTP: "",
+        },
+      },
     ],
   });
 
@@ -103,12 +133,6 @@ const GenerateForm = ({ uploadedImage }) => {
     setImageUrl(ipfsImageUrl);
   };
 
-  function dateTimeToTimestamp(dateTime) {
-    const date = new Date(dateTime);
-    const timestamp = Math.floor(date.getTime() / 1000);
-    return timestamp;
-  }
-
   // uploads image to IPFS, and sets ImageUpload to true to trigger effect
   const onSubmit = async (data) => {
     await uploadImageToIPFS(uploadedImage);
@@ -116,21 +140,43 @@ const GenerateForm = ({ uploadedImage }) => {
     console.log(`image uploaded true`);
   };
 
-  // wagmi stuff - refetch the prepare date (to get most recent imageIPFS CID from state)
+  // when the image has been uploaded we fetch the collection data from the pockyAPI
   useEffect(() => {
     if (imageUploaded == false) return;
-    console.log(`refetched prepare...`);
+    console.log(`in getting collection effect`);
+    const getNewCollection = async () => {
+      const collection = await newCollection(
+        watchName,
+        watchLocation,
+        watchDescription,
+        imageUrl,
+        address,
+        new Date(watchStartDate),
+        new Date(watchEndDate),
+        watchTicketPrice,
+        watchTicketAmount,
+        watchFeatured
+      );
+      console.log(`---getting new collection----`);
+      setCollection(collection);
+      setCollectionUpdated(true);
+      console.log(collection);
+    };
     refetchPrepare();
-    console.log(`done refetching`);
+    getNewCollection();
   }, [imageUploaded]);
 
   // wagmi stuff - writes register function after prepareData has changed from previous effect
   useEffect(() => {
     if (imageUploaded == false) return;
+    if (collectionUpdated == false) return;
     console.log(`trying to write..`);
     write?.();
     console.log(`written..`);
   }, [prepareData]);
+
+  console.log(new Date(watchStartDate))
+  console.log(new Date(watchEndDate))
 
   return (
     <>
@@ -187,22 +233,19 @@ const GenerateForm = ({ uploadedImage }) => {
           }}
           required
         />
-        <Dropdown
-          name="category"
-          label="Category"
-          register={register}
-          options={[
-            { type: "NBA", value: "NBA" },
-            { type: "UFC", value: "UFC" },
-          ]}
+        <InputField
+          type="text"
+          name="location"
+          label="Event Location"
+          placeholder="Enter the location of your event here"
           errors={errors}
+          register={register}
           validationSchema={{
-            required: "Role is required.",
+            required: "Location is required",
           }}
           required
         />
         <CheckBox name="featured" label="Featured Event" register={register} />
-
         <DateField
           type="text"
           name="startDate"
@@ -224,18 +267,6 @@ const GenerateForm = ({ uploadedImage }) => {
           register={register}
           validationSchema={{
             required: "Event End Date is required.",
-          }}
-          required
-        />
-        <InputField
-          type="text"
-          name="location"
-          label="Event Location"
-          placeholder="Enter the location of your event here"
-          errors={errors}
-          register={register}
-          validationSchema={{
-            required: "Location is required",
           }}
           required
         />

@@ -2,7 +2,8 @@ import { contractAddresses } from "../constants";
 
 export const CONTRACTS = {
     POCKYCOLLECTIONS_CONTRACT: "PockyCollections",
-    TICKET_CONTRACT: "Ticket"
+    TICKET_CONTRACT: "Ticket",
+    POCKYTICKETSALES_CONTRACT: "PockyTicketSales"
 }
 
 export const getContractAddressByChain = (chain, contractName) => {

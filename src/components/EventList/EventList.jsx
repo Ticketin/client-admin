@@ -3,27 +3,29 @@ import * as Tabs from "@radix-ui/react-tabs";
 import { useContractRead, useNetwork } from "wagmi";
 import { pockyCollectionsAbi } from "../../constants";
 import { convertUnixTime } from "../../utils/convertUnixTime";
-
 import styles from "./EventList.module.scss";
-import MyModal from "./Modal";
 import {
   CONTRACTS,
   getContractAddressByChain,
 } from "../../utils/getContractAddressByChain";
+import { truncateText } from "../../utils/truncateText";
+import ModalDetails from "./ModalDetails";
 
 const EventList = () => {
   const [showModal, setShowModal] = useState();
   const [eventsNow, setEventsNow] = useState([]);
   const [eventsUpcoming, setEventsUpcoming] = useState([]);
+  const [clickedEventId, setClickedEventId] = useState();
   const { chain } = useNetwork();
 
-  const handleOpenModal = () => {
-    console.log(`clicked handleClickEvent`);
+  const handleOpenModal = (eventId) => {
     setShowModal(true);
+    setClickedEventId(eventId);
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
+    setClickedEventId(null);
   };
 
   const { data, refetch } = useContractRead({
@@ -36,16 +38,23 @@ const EventList = () => {
     args: [],
     onSuccess(data) {
       console.log(`succesfully fetched`);
-      const currentDate = Math.floor(Date.now() / 1000);
+      const currentDate = Math.floor(Date.now());
+
+      const eventsList = data.map((item, index) => {
+        return {
+          ...item,
+          eventId: index,
+        };
+      });
 
       // filters the currently running events
-      const tempEventsNow = data.filter(
+      const tempEventsNow = eventsList.filter(
         (event) => currentDate > event.startDate && currentDate < event.endDate
       );
       setEventsNow(tempEventsNow);
 
       // filter the upcoming events
-      const tempEventsUpcoming = data.filter(
+      const tempEventsUpcoming = eventsList.filter(
         (event) => currentDate < event.startDate
       );
       setEventsUpcoming(tempEventsUpcoming);
@@ -54,7 +63,11 @@ const EventList = () => {
 
   return (
     <>
-      <MyModal show={showModal} closeModal={handleCloseModal} />
+      <ModalDetails
+        show={showModal}
+        closeModal={handleCloseModal}
+        eventId={clickedEventId}
+      />
       <div className={styles.eventsList}>
         <Tabs.Root className={styles.tabsRoot} defaultValue="tab1">
           <div className={styles.row}>
@@ -78,22 +91,22 @@ const EventList = () => {
                     <div
                       key={index}
                       className={styles.eventRow}
-                      onClick={handleOpenModal}
+                      onClick={() => handleOpenModal(event.eventId)}
                     >
-                      <img
-                        className={styles.eventImage}
-                        src={event.imageUrl}
-                        alt="event image"
-                      />
+                      <div className={styles.imageWrapper}>
+                        <img
+                          className={styles.eventImage}
+                          src={event.imageUrl}
+                          alt="event image"
+                        />
+                      </div>
                       <div className={styles.eventContent}>
                         <div className={styles.column}>
                           <p className={styles.eventTitle}>{event.name}</p>
                           <p className={styles.eventDescription}>
-                            {event.description}
+                            {truncateText(event.description)}
                           </p>
                           <div className={styles.textContainer}>
-                            <p className={styles.category}>{event.category}</p>
-                            <p> | </p>
                             <p className={styles.eventDate}>
                               {convertUnixTime(event.startDate.toString())} -{" "}
                               {convertUnixTime(event.endDate.toString())}
@@ -113,22 +126,22 @@ const EventList = () => {
                     <div
                       key={index}
                       className={styles.eventRow}
-                      onClick={handleOpenModal}
+                      onClick={() => handleOpenModal(event.eventId)}
                     >
-                      <img
-                        className={styles.eventImage}
-                        src={event.imageUrl}
-                        alt="event image"
-                      />
+                      <div className={styles.imageWrapper}>
+                        <img
+                          className={styles.eventImage}
+                          src={event.imageUrl}
+                          alt="event image"
+                        />
+                      </div>
                       <div className={styles.eventContent}>
                         <div className={styles.column}>
                           <p className={styles.eventTitle}>{event.name}</p>
                           <p className={styles.eventDescription}>
-                            {event.description}
+                            {truncateText(event.description)}
                           </p>
                           <div className={styles.textContainer}>
-                            <p className={styles.category}>{event.category}</p>
-                            <p> | </p>
                             <p className={styles.eventDate}>
                               {convertUnixTime(event.startDate.toString())} -{" "}
                               {convertUnixTime(event.endDate.toString())}

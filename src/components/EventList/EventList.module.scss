@@ -1,139 +1,143 @@
 @import "./../../assets/styles/main.scss";
 
 .eventsList {
-    width: 800px;
-    margin: auto auto;
-    border-radius: 6px;
-    margin-top: 100px;
-    margin-bottom: 100px;
+  width: 800px;
+  margin: auto auto;
+  border-radius: 6px;
+  margin-top: 100px;
+  margin-bottom: 100px;
 }
 
 .tabsRoot {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    align-items: flex-end;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  align-items: flex-end;
 }
 
 .tabsList {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: $slate-100;
-    padding: 8px;
-    border-radius: 6px;
-    width: 214px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $slate-100;
+  padding: 8px;
+  border-radius: 6px;
+  width: 214px;
 }
 
 .tabsTrigger {
-    font-family: inherit;
-    background-color: inherit;
-    padding: 6px 4px 6px 4px;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-    color: $slate-700;
-    @include p-body-medium;
-    user-select: none;
-    cursor: pointer;
-    border-radius: 4px;
+  font-family: inherit;
+  background-color: inherit;
+  padding: 6px 4px 6px 4px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  color: $slate-700;
+  @include p-body-medium;
+  user-select: none;
+  cursor: pointer;
+  border-radius: 4px;
 }
 
 .tabsTrigger:hover {
-    color: $slate-900;
+  color: $slate-900;
 }
+
 .tabsTrigger[data-state="active"] {
-    background-color: white;
-    color: $slate-900;
+  background-color: white;
+  color: $slate-900;
 }
+
 .tabsTrigger:focus {
-    position: relative;
+  position: relative;
 }
 
 .tabsContent {
-    border: 1px solid $slate-300;
-    border-radius: 6px;
-    padding: 20px;
+  border: 1px solid $slate-300;
+  border-radius: 6px;
+  padding: 20px;
 }
 
 .TabsContent:focus {
-    box-shadow: 0 0 0 2px black;
+  box-shadow: 0 0 0 2px black;
 }
-
 
 // Tab Content
 .eventRow {
-    cursor: pointer;
-    margin: 0.75rem 0 0.75rem 0;
-    display: flex;
-    flex: 1;
-    padding: 10px;
-    border-radius: 8px;
+  cursor: pointer;
+  margin: 0.75rem 0 0.75rem 0;
+  display: flex;
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
 }
 
 .eventRow:hover {
-    background-color: $slate-100;
-    border-radius: 6px;
+  background-color: $slate-100;
+  border-radius: 6px;
 }
 
 .eventRow:first-child {
-    margin-top: 0px;
+  margin-top: 0px;
 }
 
 .eventRow:last-child {
-    margin-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+.imageWrapper {
+  margin-right: 20px;
+  aspect-ratio: 9/11;
+  width: 100%;
+  max-width: 100px; // sets the maxwidth so when only 1 event has been added they won't stretch to 100% width
+  height: 100%;
+  border-radius: 8px;
+  pointer-events: none;
+  overflow: hidden;
 }
 
 .eventImage {
-    margin-right: 35px;
-    width: 85px;
-    height: 100%;
-    border-radius: 8px;
-    pointer-events: none;
+  height: 100%;
+  width: 100%;
+  object-fit: fill;
 }
 
 .eventContent {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .column {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .eventTitle {
-    @include p-table-head;
-    color: $slate-900;
-    margin-top: 5px;
+  @include p-table-head;
+  color: $slate-900;
+  margin-top: 5px;
 }
 
 .eventDescription {
-    @include p-subtle;
-    color: $slate-500;
-    margin: 0;
+  @include p-subtle;
+  color: $slate-500;
+  margin: 0;
 }
 
 .textContainer {
-    @include p-small;
-    color: $slate-500;
-    display: flex;
-    gap: 5px;
-}
-
-.category {
-}
-
-.eventDate {
+  @include p-small;
+  color: $slate-500;
+  display: flex;
+  gap: 5px;
 }
