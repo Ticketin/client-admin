@@ -19,6 +19,14 @@ const Sidebar = () => {
           <li className={styles.li}>
             <NavLink
               className={(navData) => (navData.isActive ? styles.active : "")}
+              to={"/past-events"}
+            >
+              Generate
+            </NavLink>
+          </li>
+          <li className={styles.li}>
+            <NavLink
+              className={(navData) => (navData.isActive ? styles.active : "")}
               to={"/generate-event"}
             >
               Generate
