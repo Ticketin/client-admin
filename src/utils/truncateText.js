@@ -1,5 +1,4 @@
 export const truncateText = (text) => {
-  console.log(text);
   if (text.length <= 160) {
     return text;
   } else {

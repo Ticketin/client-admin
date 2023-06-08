@@ -1,10 +1,6 @@
 import React from "react";
 import Modal from "react-modal";
-
 import styles from "./ModalDetails.module.scss";
-import ModalForm from "./ModalForm";
-import ModalUploadImage from "./ModalUploadImage";
-import Button from "../UI/Button";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import ModalContent from "./ModalContent";
 

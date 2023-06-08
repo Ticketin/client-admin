@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import { useContractRead, useNetwork } from "wagmi";
 import { pockyCollectionsAbi } from "../../constants";
 import { convertUnixTime } from "../../utils/convertUnixTime";
-
 import styles from "./EventList.module.scss";
-import MyModal from "./Modal";
 import {
   CONTRACTS,
   getContractAddressByChain,
@@ -21,10 +19,8 @@ const EventList = () => {
   const { chain } = useNetwork();
 
   const handleOpenModal = (eventId) => {
-    console.log(`clicked handleClickEvent`);
     setShowModal(true);
     setClickedEventId(eventId);
-    console.log(eventId);
   };
 
   const handleCloseModal = () => {

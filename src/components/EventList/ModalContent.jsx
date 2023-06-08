@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./ModalContent.module.scss";
 import {
   useContractRead,
   useNetwork,
-  useAccount,
   usePrepareContractWrite,
   useContractWrite,
   useWaitForTransaction,

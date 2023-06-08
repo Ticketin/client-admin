@@ -2,7 +2,6 @@ import * as React from "react";
 import { useForm } from "react-hook-form";
 import InputField from "../UI/InputField";
 import styles from "./GenerateForm.module.scss";
-import Dropdown from "../UI/Dropdown";
 import DateField from "../UI/DateField";
 import { NFTStorage } from "nft.storage";
 import { useEffect } from "react";
@@ -49,7 +48,6 @@ const GenerateForm = ({ uploadedImage }) => {
   const watchDescription = watch("description", false);
   const watchTicketPrice = watch("ticketPrice", false);
   const watchTicketAmount = watch("ticketAmount", false);
-  const watchCategory = watch("category", false);
   const watchFeatured = watch("featured", false);
   const watchStartDate = watch("startDate", false);
   const watchEndDate = watch("endDate", false);
@@ -142,6 +140,7 @@ const GenerateForm = ({ uploadedImage }) => {
     console.log(`image uploaded true`);
   };
 
+  // when the image has been uploaded we fetch the collection data from the pockyAPI
   useEffect(() => {
     if (imageUploaded == false) return;
     console.log(`in getting collection effect`);
@@ -175,6 +174,9 @@ const GenerateForm = ({ uploadedImage }) => {
     write?.();
     console.log(`written..`);
   }, [prepareData]);
+
+  console.log(new Date(watchStartDate))
+  console.log(new Date(watchEndDate))
 
   return (
     <>
