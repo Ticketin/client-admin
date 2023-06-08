@@ -31,6 +31,12 @@ const Sidebar = () => {
             >
               Generate
             </NavLink>
+            {/* <NavLink
+              className={(navData) => (navData.isActive ? styles.active : "")}
+              to={"/generate/collection"}
+            >
+              Generate
+            </NavLink> */}
           </li>
         </ul>
       </nav>
