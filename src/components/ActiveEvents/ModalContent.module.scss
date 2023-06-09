@@ -16,12 +16,12 @@
 
 .imageWrapper {
   aspect-ratio: 9/11;
-  object-fit: cover;
   height: 100%;
   margin-bottom: 15px;
 }
 
 .eventImage {
+  object-fit: cover;
   border-radius: 7px;
   height: 100%;
   width: 100%;

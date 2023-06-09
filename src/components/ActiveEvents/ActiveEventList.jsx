@@ -3,15 +3,16 @@ import * as Tabs from "@radix-ui/react-tabs";
 import { useContractRead, useNetwork } from "wagmi";
 import { pockyCollectionsAbi } from "../../constants";
 import { convertUnixTime } from "../../utils/convertUnixTime";
-import styles from "./EventList.module.scss";
+import styles from "./ActiveEventList.module.scss";
 import {
   CONTRACTS,
   getContractAddressByChain,
 } from "../../utils/getContractAddressByChain";
 import { truncateText } from "../../utils/truncateText";
 import ModalDetails from "./ModalDetails";
+import { ethers } from "ethers";
 
-const EventList = () => {
+const ActiveEventList = () => {
   const [showModal, setShowModal] = useState();
   const [eventsNow, setEventsNow] = useState([]);
   const [eventsUpcoming, setEventsUpcoming] = useState([]);
@@ -71,7 +72,7 @@ const EventList = () => {
       <div className={styles.eventsList}>
         <Tabs.Root className={styles.tabsRoot} defaultValue="tab1">
           <div className={styles.row}>
-            <h4>Event List</h4>
+            <h4>Active Events</h4>
             <Tabs.List
               className={styles.tabsList}
               aria-label="Manage your account"
@@ -101,7 +102,7 @@ const EventList = () => {
                         />
                       </div>
                       <div className={styles.eventContent}>
-                        <div className={styles.column}>
+                        <div className={styles.columnOne}>
                           <p className={styles.eventTitle}>{event.name}</p>
                           <p className={styles.eventDescription}>
                             {truncateText(event.description)}
@@ -112,6 +113,15 @@ const EventList = () => {
                               {convertUnixTime(event.endDate.toString())}
                             </p>
                           </div>
+                        </div>
+                        <div className={styles.columnTwo}>
+                          <p className={styles.price}>
+                            {ethers.utils.formatEther(
+                              event.priceInETH.toString()
+                            )}{" "}
+                            MATIC
+                          </p>
+                          <p className={styles.supply}>164/1000</p>
                         </div>
                       </div>
                     </div>
@@ -136,7 +146,7 @@ const EventList = () => {
                         />
                       </div>
                       <div className={styles.eventContent}>
-                        <div className={styles.column}>
+                        <div className={styles.columnOne}>
                           <p className={styles.eventTitle}>{event.name}</p>
                           <p className={styles.eventDescription}>
                             {truncateText(event.description)}
@@ -147,6 +157,15 @@ const EventList = () => {
                               {convertUnixTime(event.endDate.toString())}
                             </p>
                           </div>
+                        </div>
+                        <div className={styles.columnTwo}>
+                          <p className={styles.price}>
+                            {ethers.utils.formatEther(
+                              event.priceInETH.toString()
+                            )}{" "}
+                            MATIC
+                          </p>
+                          <p className={styles.supply}>164/1000</p>
                         </div>
                       </div>
                     </div>
@@ -160,4 +179,4 @@ const EventList = () => {
   );
 };
 
-export default EventList;
+export default ActiveEventList;
