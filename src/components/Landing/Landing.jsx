@@ -19,7 +19,7 @@ const Landing = () => {
     useEffect(() => {
         if (!clicked || !isConnected) return;
         console.log(`in use-effect`);
-        navigate("/event-list");
+        navigate("/active-events");
     }, [isConnected, clicked, navigate]);
 
     return (
