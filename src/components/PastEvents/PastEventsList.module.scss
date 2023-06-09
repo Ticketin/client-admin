@@ -94,20 +94,23 @@
 }
 
 .imageWrapper {
-  margin-right: 20px;
-  aspect-ratio: 9/11;
-  width: 100%;
-  max-width: 100px; // sets the maxwidth so when only 1 event has been added they won't stretch to 100% width
-  height: 100%;
-  border-radius: 8px;
-  pointer-events: none;
-  overflow: hidden;
-}
+    margin-right: 20px;
+    aspect-ratio: 9/11;
+    width: 100%;
+    max-width: 100px; // sets the maxwidth so when only 1 event has been added they won't stretch to 100% width
+    height: 100%;
+    border-radius: 8px;
+    pointer-events: none;
+    overflow: hidden;
+  }
 
 .eventImage {
-  height: 100%;
-  width: 100%;
-  object-fit: fill;
+    margin-right: 35px;
+    width: 85px;
+    height: 100%;
+    border-radius: 8px;
+    pointer-events: none;
+    object-fit: cover;
 }
 
 .eventContent {

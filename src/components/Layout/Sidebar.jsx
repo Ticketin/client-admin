@@ -11,9 +11,17 @@ const Sidebar = () => {
           <li className={styles.li}>
             <NavLink
               className={(navData) => (navData.isActive ? styles.active : "")}
-              to={"/event-list"}
+              to={"/active-events"}
             >
-              Event List
+              Active Events
+            </NavLink>
+          </li>
+          <li className={styles.li}>
+            <NavLink
+              className={(navData) => (navData.isActive ? styles.active : "")}
+              to={"/past-events"}
+            >
+              Past Events
             </NavLink>
           </li>
           <li className={styles.li}>
@@ -21,7 +29,7 @@ const Sidebar = () => {
               className={(navData) => (navData.isActive ? styles.active : "")}
               to={"/generate-event"}
             >
-              Generate
+              Generate Event
             </NavLink>
           </li>
         </ul>
