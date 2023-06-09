@@ -23,7 +23,13 @@ import CheckBox from "../UI/CheckBox";
 import { newCollection } from "../../api/newCollection";
 import { UPCOMING_EVENT_DATA } from "../../utils/eventDataPlaceholder";
 
-const GenerateForm = ({ uploadedImage }) => {
+const GenerateForm = ({
+  uploadedImage,
+  onUploadIPFS,
+  onLoading,
+  onError,
+  onSuccess,
+}) => {
   const API_KEY = import.meta.env.VITE_NFTSTORAGE_API_KEY;
   const client = new NFTStorage({ token: API_KEY });
 
@@ -120,9 +126,11 @@ const GenerateForm = ({ uploadedImage }) => {
   const { isLoading, isSuccess } = useWaitForTransaction({
     hash: data?.hash,
     onSuccess(data) {
-      console.log(`finished`);
+      onLoading(false)
+      onSuccess(true);
+      console.log(`succesfully created new event`);
       console.log(data);
-      navigate("/event-list");
+      // navigate("/event-list");
     },
   });
 
@@ -131,12 +139,14 @@ const GenerateForm = ({ uploadedImage }) => {
     const ipfsImageUrl = `https://ipfs.io/ipfs/${imageCid}`;
     console.log(ipfsImageUrl);
     setImageUrl(ipfsImageUrl);
+    onUploadIPFS(true);
   };
 
   // uploads image to IPFS, and sets ImageUpload to true to trigger effect
   const onSubmit = async (data) => {
+    onLoading(true);
     await uploadImageToIPFS(uploadedImage);
-    setImageUploaded(true);
+    setImageUploaded(!imageUploaded); // toggle to force re
     console.log(`image uploaded true`);
   };
 
@@ -174,9 +184,6 @@ const GenerateForm = ({ uploadedImage }) => {
     write?.();
     console.log(`written..`);
   }, [prepareData]);
-
-  console.log(new Date(watchStartDate))
-  console.log(new Date(watchEndDate))
 
   return (
     <>
