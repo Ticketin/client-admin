@@ -3,7 +3,7 @@ import * as Tabs from "@radix-ui/react-tabs";
 import { useContractRead, useNetwork } from "wagmi";
 import { pockyCollectionsAbi } from "../../constants";
 import { convertUnixTime } from "../../utils/convertUnixTime";
-import styles from "./EventList.module.scss";
+import styles from "./PastEventsList.module.scss";
 import {
   CONTRACTS,
   getContractAddressByChain,
@@ -13,8 +13,8 @@ import ModalDetails from "./ModalDetails";
 
 const PastEventsList = () => {
   const [showModal, setShowModal] = useState();
-  const [eventsNow, setEventsNow] = useState([]);
-  const [eventsUpcoming, setEventsUpcoming] = useState([]);
+  const [allEvents, setAllEvents] = useState();
+  const [pastEvents, setPastEvents] = useState();
   const [clickedEventId, setClickedEventId] = useState();
   const { chain } = useNetwork();
 
@@ -46,18 +46,13 @@ const PastEventsList = () => {
           eventId: index,
         };
       });
+      setAllEvents(eventsList);
 
       // filters the currently running events
-      const tempEventsNow = eventsList.filter(
-        (event) => currentDate > event.startDate && currentDate < event.endDate
+      const tempPastEvents = eventsList.filter(
+        (event) => currentDate > event.endDate
       );
-      setEventsNow(tempEventsNow);
-
-      // filter the upcoming events
-      const tempEventsUpcoming = eventsList.filter(
-        (event) => currentDate < event.startDate
-      );
-      setEventsUpcoming(tempEventsUpcoming);
+      setPastEvents(tempPastEvents);
     },
   });
 
@@ -71,22 +66,22 @@ const PastEventsList = () => {
       <div className={styles.eventsList}>
         <Tabs.Root className={styles.tabsRoot} defaultValue="tab1">
           <div className={styles.row}>
-            <h4>Event List</h4>
+            <h4>Past Events List</h4>
             <Tabs.List
               className={styles.tabsList}
               aria-label="Manage your account"
             >
               <Tabs.Trigger className={styles.tabsTrigger} value="tab1">
-                Now
+                Past
               </Tabs.Trigger>
               <Tabs.Trigger className={styles.tabsTrigger} value="tab2">
-                Upcoming
+                All
               </Tabs.Trigger>
             </Tabs.List>
           </div>
           <Tabs.Content className={styles.tabsContent} value="tab1">
-            {eventsNow
-              ? eventsNow.map((event, index) => {
+            {pastEvents
+              ? pastEvents.map((event, index) => {
                   return (
                     <div
                       key={index}
@@ -120,8 +115,8 @@ const PastEventsList = () => {
               : null}
           </Tabs.Content>
           <Tabs.Content className={styles.tabsContent} value="tab2">
-            {eventsUpcoming
-              ? eventsUpcoming.map((event, index) => {
+            {allEvents
+              ? allEvents.map((event, index) => {
                   return (
                     <div
                       key={index}

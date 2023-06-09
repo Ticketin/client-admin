@@ -1,8 +1,8 @@
 import React from "react";
-import EventList from "../components/EventList/EventList";
 import Layout from "../components/Layout/Layout";
+import PastEventsList from "../components/PastEvents/PastEventsList";
 
-const PastEventsList = () => {
+const PastEventsListPage = () => {
   return (
     <div>
       <Layout>
@@ -12,4 +12,4 @@ const PastEventsList = () => {
   );
 };
 
-export default PastEventsList;
+export default PastEventsListPage;

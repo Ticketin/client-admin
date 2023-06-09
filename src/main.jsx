@@ -14,8 +14,6 @@ import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import { BrowserRouter } from "react-router-dom";
 import "./assets/styles/global.scss";
-import Landing from "./components/Landing/Landing.jsx";
-import ActivatedEventList from "./components/Activated/ActivatedEventList";
 import App from "./App";
 
 const ALCHEMY_API_KEY = import.meta.env.VITE_ALCHEMY_API_KEY;
